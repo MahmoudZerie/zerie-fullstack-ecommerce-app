@@ -4,7 +4,6 @@ import {
 	Box,
 	Flex,
 	Avatar,
-	Text,
 	Button,
 	Menu,
 	MenuButton,
@@ -17,6 +16,7 @@ import {
 	useColorMode,
 	Center,
 	HStack,
+	IconButton,
 } from '@chakra-ui/react'
 import { MdSunny } from "react-icons/md";
 import { IoMoon } from "react-icons/io5";
@@ -25,10 +25,13 @@ import CookieService from '../services/CookieService';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCart } from '../app/features/cartSlice';
 import { onOpenCartDrawerAction } from '../app/features/globalSlice';
-const Links = ['Dashboard', 'Products', 'Team']
+import { useRef } from 'react';
+import NavDrawer from '../components/NavDrawer';
+import { CiMenuBurger } from "react-icons/ci";
+
+const Links = ['Dashboard', 'Products', 'Team'];
 
 const NavLink = ({ children }) => {
-
 	return (
 		<Box
 			as={RouterLink}
@@ -46,19 +49,20 @@ const NavLink = ({ children }) => {
 	)
 }
 
-export default function Navbar() {
-	const dispatch=useDispatch();
-	const onOpenDrawer=()=>{
+const Navbar = () => {
+	const dispatch = useDispatch();
+	const onOpenDrawer = () => {
 		dispatch(onOpenCartDrawerAction());
 	}
-	const {cartProducts}=useSelector(selectCart);
+	const { cartProducts } = useSelector(selectCart);
 	const token = CookieService.get("jwt");
 	const logoutHandler = () => {
 		CookieService.remove("jwt");
 		window.location.reload();
 	}
-	const { colorMode, toggleColorMode } = useColorMode()
-	// const { isOpen, onOpen, onClose } = useDisclosure()
+	const { colorMode, toggleColorMode } = useColorMode();
+	const { isOpen, onOpen, onClose } = useDisclosure();
+
 	return (
 		<>
 			<Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
@@ -73,51 +77,71 @@ export default function Navbar() {
 						</HStack>
 					</HStack>
 
-					<Flex  >
+					<Flex alignItems={'center'}>
+
+
+
 						<Stack direction={'row'} spacing={7} h={16} alignItems={'center'} justifyContent={'space-between'}>
+							
+							<Button
+								display={{ md: 'none' }}
+								onClick={onOpen}
+								>
+									
+								<CiMenuBurger />
+								</Button>
+
+
 							<Button onClick={toggleColorMode}>
 								{colorMode === 'light' ? <IoMoon /> : <MdSunny />}
 							</Button>
-							<Button
-							onClick={onOpenDrawer}
-							>cart({cartProducts.length})</Button>
-							{token ? <Menu>
-								<MenuButton
-									as={Button}
-									rounded={'full'}
-									variant={'link'}
-									cursor={'pointer'}
-									minW={0}>
-									<Avatar
-										size={'sm'}
-										src={'https://avatars.dicebear.com/api/male/username.svg'}
-									/>
-								</MenuButton>
-								<MenuList alignItems={'center'}>
-									<br />
-									<Center>
+							<Button onClick={onOpenDrawer}>
+								cart({cartProducts.length})
+							</Button>
+							{token ? 
+								<Menu>
+									<MenuButton
+										as={Button}
+										rounded={'full'}
+										variant={'link'}
+										cursor={'pointer'}
+										minW={0}
+									>
 										<Avatar
-											size={'2xl'}
+											size={'sm'}
 											src={'https://avatars.dicebear.com/api/male/username.svg'}
 										/>
-									</Center>
-									<br />
-									<Center>
-										<p>Username</p>
-									</Center>
-									<br />
-									<MenuDivider />
-									<MenuItem>Your Servers</MenuItem>
-									<MenuItem>Account Settings</MenuItem>
-									<MenuItem onClick={logoutHandler}>Logout</MenuItem>
-								</MenuList>
-							</Menu> : <RouterLink to="/login" >Login</RouterLink>}
-
-
+									</MenuButton>
+									<MenuList alignItems={'center'}>
+										<br />
+										<Center>
+											<Avatar
+												size={'2xl'}
+												src={'https://avatars.dicebear.com/api/male/username.svg'}
+											/>
+										</Center>
+										<br />
+										<Center>
+											<p>Username</p>
+										</Center>
+										<br />
+										<MenuDivider />
+										<MenuItem>Your Servers</MenuItem>
+										<MenuItem>Account Settings</MenuItem>
+										<MenuItem onClick={logoutHandler}>Logout</MenuItem>
+									</MenuList>
+								</Menu>
+							 : 
+								<RouterLink to="/login">Login</RouterLink>
+							}
 						</Stack>
+
 					</Flex>
 				</Flex>
 			</Box>
+			<NavDrawer isOpen={isOpen} onClose={onClose}  />
 		</>
-	)
+	);
 }
+
+export default Navbar;

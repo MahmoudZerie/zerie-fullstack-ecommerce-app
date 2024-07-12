@@ -32,14 +32,17 @@ import {
 	FiChevronDown,
 } from 'react-icons/fi'
 import { Outlet } from 'react-router-dom'
+import { FaHome } from "react-icons/fa";
 
 import { BsGrid3X3 } from "react-icons/bs";
 import { HiOutlineViewColumns } from "react-icons/hi2";
+import { MdOutlineDashboardCustomize } from "react-icons/md";
 
 const LinkItems = [
-  { to: "/dashboard", name: "Dashboard", icon: FiHome },
+  { to: "/dashboard", name: "Dashboard", icon: MdOutlineDashboardCustomize },
   { to: "/dashboard/products", name: "Products", icon: HiOutlineViewColumns },
   { to: "/dashboard/categories", name: "Categories", icon: BsGrid3X3 },
+  { to: "/", name: "Home", icon: FaHome  },
 ];
  
 
