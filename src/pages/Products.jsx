@@ -9,7 +9,7 @@ const ProductsPage = () => {
   // const { isLoading, data, error } = useGetDashboardProductsQuery({ page: 1 })
   const getProductList = async () => {
     const response = await axios.get(
-      `${import.meta.env.VITE_SERVER_URL}/api/products?populate=thumbnail,category&pagination[pageSize]=10&pagination[page]=1&sort=createdAt:DESC`
+      "https://zerie-fullstack-reactjs-strapi.onrender.com/api/products?populate=thumbnail,category&pagination[pageSize]=10&pagination[page]=1&sort=createdAt:DESC"
     );                                        
     return response.data;
   };

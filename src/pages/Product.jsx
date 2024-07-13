@@ -31,7 +31,7 @@ const ProductPage = () => {
 
   const getProductList = async () => {
     const { data } = await axios.get(
-      `${import.meta.env.VITE_SERVER_URL}/api/products/${id}?populate=thumbnail,category&fields[0]=title&fields[1]=description&fields[2]=price`
+      `https://zerie-fullstack-reactjs-strapi.onrender.com/api/products/${id}?populate=thumbnail,category&fields[0]=title&fields[1]=description&fields[2]=price`
     )
     return data;
   }
@@ -73,7 +73,7 @@ const ProductPage = () => {
       <Card maxW="sm" mx={"auto"} mb={20} border={"1px solid #a8b5c8"} bg={"none"}>
         <CardBody>
           <Image
-            src={`${import.meta.env.VITE_SERVER_URL}${data?.data?.attributes?.thumbnail?.data?.attributes?.url}`}
+            src={`https://zerie-fullstack-reactjs-strapi.onrender.com${data?.data?.attributes?.thumbnail?.data?.attributes?.url}`}
             alt={data?.data?.attributes?.title}
             borderRadius="lg"
             h="200px"
