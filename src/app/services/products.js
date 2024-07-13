@@ -6,7 +6,7 @@ export const productsApiSlice = createApi({
 	tagTypes: ["Products"],
 	refetchOnReconnect: true,
 	refetchOnMountOrArgChange: true,
-	baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_SERVER_URL }),
+	baseQuery: fetchBaseQuery({ baseUrl: "https://zerie-fullstack-reactjs-strapi.onrender.com"}),
 	endpoints: (build) => ({
 		// .. GET
 		getDashboardProducts: build.query({
