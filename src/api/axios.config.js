@@ -1,5 +1,5 @@
 import axios from "axios";
 
 export const axiosInstance=axios.create({
-	baseURL:"http://localhost:1337"
+	baseURL:"https://zerie-fullstack-reactjs-strapi.onrender.com"
 })
